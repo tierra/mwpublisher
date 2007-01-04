@@ -1,0 +1,117 @@
+<?php
+
+/** \file Options for MediaWiki Publisher and parser configuration.
+ *
+ *  \date    Revision date:      $Date$
+ *  \version Revision version:   $Revision$
+ *  \author  Revision committer: $Author$
+ *
+ *  Copyright (C) 2006 Bryan Petty et al
+ *  MediaWiki Publisher - http://mwpublisher.org/
+ *
+ *  This file is part of MediaWiki Publisher.
+ *
+ *  MediaWiki Publisher is free software; you can redistribute it and/or
+ *  modify it under the terms of version 2 of the GNU General Public
+ *  License as published by the Free Software Foundation.
+ *
+ *  MediaWiki Publisher is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with MediaWiki Publisher; if not, write to the Free Software
+ *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
+ *  http://www.gnu.org/licenses/gpl.html
+ */
+
+require_once "general.php";
+
+// Uncomment to output debug messages.
+//define('DEBUG', true);
+
+// Uncomment to include support for ISO 639-3 (three letter) language codes.
+// Note: ISO 639-1 (two letter) codes are supported regardless of this setting.
+// This will slow down processing just a bit.
+//define('ISO_639_3', true);
+
+// URL to your MediaWiki installation. Trailing slash is required.
+$MWURL = "http://mwpublisher.org/";
+
+// Uncomment the parsers you plan to use:
+require_once "parsers/helpblocks.php";
+require_once "parsers/xhtml.php";
+
+// Initialize the parsers
+$mwpphb = new mwpHelpBlocksParser();
+$mwppxhtml = new mwpXHTMLParser();
+
+// Don't forget general parser settings...
+//$mwpphb->set_image_dir("images/");
+//$mwpphb->set_htd_dir("htd/");
+//$mwppxhtml->set_image_dir("images/");
+//$mwppxhtml->set_xhtml_dir("xhtml/");
+//$mwppxhtml->set_xhtml_extension("htm");
+
+// Install our parsers so MWP can find them, and we can more easily
+// configure common options.
+$mwpInstalledParsers[] = $mwpphb;
+$mwpInstalledParsers[] = $mwppxhtml;
+
+// Here's where you can configure common options.
+for($x = 0; $x < count($mwpInstalledParsers); $x++)
+{
+	if(is_subclass_of($mwpInstalledParsers[$x], 'mwpGenericParser'))
+	{
+		// Any templates you'd like to exclude from publishing?
+		$mwpInstalledParsers[$x]->exclude_template('todo');
+	}
+}
+
+// You may wish to use a similar technique like this to configure
+// multiple parsers at the same time.
+
+function AddPage($id, $location, $title = '')
+{
+	global $mwpInstalledParsers;
+	$loc = new mwpLocation($location);
+	for($x = 0; $x < count($mwpInstalledParsers); $x++)
+	{
+		if($title == '')
+			$mwpInstalledParsers[$x]->add_page($id, $loc, $loc->get_stripped_title());
+		else
+			$mwpInstalledParsers[$x]->add_page($id, $loc, $title);
+	}
+}
+
+// This is the page configuration used to generate the MWP User Manual
+// Use it as a guide to configuring your setup, but please avoid abusing
+// the MediaWiki Publisher site by running MWP with this configuration.
+
+# Contents
+AddPage('contents',		'User Manual');
+
+# Introduction
+AddPage('introduction',		'Introduction');
+
+AddPage('requirements',		'Requirements');
+AddPage('output_formats',	'Supported Output Formats');
+AddPage('license',		'License');
+
+# Installation & Configuration
+AddPage('install_and_config',	'Installation & Configuration');
+
+AddPage('helpblocks',		'HelpBlocks Parser');
+AddPage('xhtml',		'XHTML Parser');
+
+# Writing Custom Parsers
+AddPage('writing_parsers',	'Writing Custom Parsers');
+
+AddPage('mwpmessage',		'mwpMessage');
+AddPage('mwplocation',		'mwpLocation');
+AddPage('mwpwikipage',		'mwpWikiPage');
+AddPage('mwpparser',		'mwpParser');
+AddPage('mwpgenericparser',	'mwpGenericParser');
+
+?>

@@ -35,9 +35,6 @@ class mwpXHTMLParser extends mwpGenericParser
 	/// Array of pages (values) to retrieve and filenames (key) to save to.
 	var $pages = array();
 
-	/// Directory to save images to.
-	var $image_dir = "images/";
-
 	/// Directory to save HelpBlocks page files to.
 	var $xhtml_dir = "xhtml/";
 
@@ -67,19 +64,14 @@ class mwpXHTMLParser extends mwpGenericParser
 			$this->pages[$filename] = array($location, $title);
 	}
 
-	/** Sets the location where images should be saved off to. This
-	 *  directory needs to be writable by the webserver or whoever
-	 *  is running the script. */
-	function set_image_dir($dir)
-	{
-		$this->image_dir = $dir;
-	}
-
 	/** Sets the location where HelpBlocks page files should be saved
 	 *  off to. This directory needs to be writable by the webserver or
 	 *  whoever is running the script. */
 	function set_xhtml_dir($dir)
 	{
+		if($dir == '')
+			return;
+		append_trailing_slash($dir);
 		$this->xhtml_dir = $dir;
 	}
 
@@ -162,13 +154,6 @@ class mwpXHTMLParser extends mwpGenericParser
 		}
 
 		mwpMessage("Done.");
-	}
-
-	function handle_image_file($location, $file_info)
-	{
-		mwpMessage("XHTML: Downloading image: " . $file_info['filename']);
-		file_put_contents($this->image_dir . $file_info['filename'],
-			file_get_contents($file_info['url']));
 	}
 
 	function format_internal_link($location, $label, $link)

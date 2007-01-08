@@ -48,11 +48,17 @@ $mwpphb = new mwpHelpBlocksParser();
 $mwppxhtml = new mwpXHTMLParser();
 
 // Don't forget general parser settings...
-//$mwpphb->set_image_dir("images/");
-//$mwpphb->set_htd_dir("htd/");
-//$mwppxhtml->set_image_dir("images/");
-//$mwppxhtml->set_xhtml_dir("xhtml/");
-//$mwppxhtml->set_xhtml_extension("htm");
+
+$mwpphb->set_htd_dir('htd');
+$mwpphb->set_image_dir('htd/images');
+$mwpphb->set_image_url('images');
+$mwppxhtml->set_xhtml_dir('xhtml');
+$mwppxhtml->set_xhtml_extension('php');
+$mwppxhtml->set_image_dir('xhtml/images');
+$mwppxhtml->set_image_url('images');
+
+$mwppxhtml->set_header(file_get_contents('xhtml-header.php'));
+$mwppxhtml->set_footer(file_get_contents('xhtml-footer.php'));
 
 // Install our parsers so MWP can find them, and we can more easily
 // configure common options.
@@ -90,7 +96,7 @@ function AddPage($id, $location, $title = '')
 // the MediaWiki Publisher site by running MWP with this configuration.
 
 # Contents
-AddPage('contents',		'User Manual');
+AddPage('contents',		'User Manual',	'Contents');
 
 # Introduction
 AddPage('introduction',		'Introduction');
@@ -105,6 +111,8 @@ AddPage('install_and_config',	'Installation & Configuration');
 AddPage('helpblocks',		'HelpBlocks Parser');
 AddPage('xhtml',		'XHTML Parser');
 
+/*
+
 # Writing Custom Parsers
 AddPage('writing_parsers',	'Writing Custom Parsers');
 
@@ -113,5 +121,7 @@ AddPage('mwplocation',		'mwpLocation');
 AddPage('mwpwikipage',		'mwpWikiPage');
 AddPage('mwpparser',		'mwpParser');
 AddPage('mwpgenericparser',	'mwpGenericParser');
+
+*/
 
 ?>

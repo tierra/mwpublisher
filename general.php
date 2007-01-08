@@ -62,6 +62,12 @@ function microtime_float()
 	return ((float)$usec + (float)$sec);
 }
 
+function append_trailing_slash(&$value)
+{
+	if(preg_match(':[\\/]$:', $value) == 0)
+		$value .= '/';
+}
+
 function mwpMessage($message, $type = MWP_NOTICE)
 {
 	switch($type)

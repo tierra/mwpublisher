@@ -82,6 +82,12 @@ class mwpGenericParser extends mwpParser
 	/// keyword set as key. See mwpGenericParser constructor for examples.
 	var $magic_vars = array();
 
+	/// Directory to save images to.
+	var $image_dir = '';
+
+	/// Base URL where HTML pages can find saved off images.
+	var $image_url = '';
+
 	// Internal variables used during parsing.
 
 	var $blockInPre		= false;
@@ -578,9 +584,9 @@ class mwpGenericParser extends mwpParser
 		$copy = $matches[1];
 		$originallink = $copy;
 		
-		// Recursively handle subsequent internal links on the same line
-		// since it seems PREG is a little greedy. There's a way to fix it,
-		// but I'm not that good with REGEX, and this works fine.
+		// Recursively handle subsequent internal links on the same line.
+		// We actually want greedy matches so links within other links
+		// are parsed and handled first.
 		if(strpos($matches[0], '[[', 2) !== false)
 		{
 			$copy = substr($copy, 0, strpos($copy, ']]'));
@@ -618,6 +624,28 @@ class mwpGenericParser extends mwpParser
 
 		//mwpMessage("Internal Link Output: " . htmlentities($replacement), MWP_DEBUG);
 		return $replacement . $secondarytext;
+	}
+
+	/** Sets the location where images should be saved off to. This
+	 *  directory needs to be writable by the webserver or whoever
+	 *  is running the script. */
+	function set_image_dir($dir)
+	{
+		if($dir == '')
+			return;
+		append_trailing_slash($dir);
+		$this->image_dir = $dir;
+	}
+
+	/** Sets the base URL where HTML images will point to for any images
+	 *  that are saved off. This is not the same location where images
+	 *  are actually saved to. */
+	function set_image_url($url)
+	{
+		if($url == '')
+			return;
+		append_trailing_slash($url);
+		$this->image_url = $url;
 	}
 
 	/** This is called for anything in the "Image" namespace found while
@@ -703,10 +731,14 @@ class mwpGenericParser extends mwpParser
 	 *		"filename": Base image filename (not always the same as the title). */
 	function handle_image_file($location, $file_info)
 	{
-		// The generic parser doesn't know where, how, or if it needs
-		// to save these off, so it's up to the implementing parser to
-		// override this.
-		return false;
+		if($this->image_dir == '')
+			return false;
+
+		mwpMessage("Downloading Image: " . $file_info['filename']);
+		file_put_contents($this->image_dir . $file_info['filename'],
+			file_get_contents($file_info['url']));
+
+		return true;
 	}
 
 	/** Called from handle_image(), this function serves to format images.
@@ -740,8 +772,8 @@ class mwpGenericParser extends mwpParser
 
 		if($alignment == 'center')
 			$replacement .= '<center>';
-		$replacement .= '<img src="images/' . $file_info['filename'] .
-			'" alt="' . $label . '"' . $extra . ">";
+		$replacement .= '<img src="' . $this->image_url .
+			$file_info['filename'] . '" alt="' . $label . '"' . $extra . ">";
 		if($alignment == 'center')
 			$replacement .= '</center>';
 
@@ -771,7 +803,9 @@ class mwpGenericParser extends mwpParser
 		$secondarytext = '';
 		$copy = $matches[1];
 
-		// Recursively handle subsequent external links on the same line
+		// Recursively handle subsequent external links on the same line.
+		// We actually want greedy matches so links within other links
+		// are parsed and handled first.
 		if(strpos($matches[0], '[', 1) !== false)
 		{
 			$copy = substr($copy, 0, strpos($copy, ']'));

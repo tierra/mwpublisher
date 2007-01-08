@@ -14,18 +14,18 @@ $nav .= '<table cellspacing="2" cellpadding="0" width="100%"><tr>' . "\n";
 
 if($prev_link != '')
 	$nav .= "\t<td><a href=\"$prev_link\" title=\"Previous: $prev_title\"><img alt=\"Previous: " .
-		$prev_title . '" border="0" src="icons/previous.gif" width="32" height="32" /></a></td>';
+		$prev_title . '" border="0" src="nav-icons/previous.gif" width="32" height="32" /></a></td>';
 else
-	$nav .= "\t".'<td><img alt="" border="0" src="icons/blank.gif" width="32" height="32" /></td>';
+	$nav .= "\t".'<td><img alt="" border="0" src="nav-icons/blank.gif" width="32" height="32" /></td>';
 
 $nav .= "\n\t".'<td><a href="contents.php" title="Contents"><img alt="Contents" border="0" ' .
-	'src="icons/contents.gif" width="32" height="32" /></a></td>'."\n";
+	'src="nav-icons/contents.gif" width="32" height="32" /></a></td>'."\n";
 
 if($next_link != '')
 	$nav .= "\t<td><a href=\"$next_link\" title=\"Next: $next_title\"><img alt=\"Next: " .
-		$next_title . '" border="0" src="icons/next.gif" width="32" height="32" /></a></td>';
+		$next_title . '" border="0" src="nav-icons/next.gif" width="32" height="32" /></a></td>';
 else
-	$nav .= "\t".'<td><img alt="" border="0" src="icons/blank.gif" width="32" height="32" /></td>';
+	$nav .= "\t".'<td><img alt="" border="0" src="nav-icons/blank.gif" width="32" height="32" /></td>';
 
 $nav .= "\n\t<td class=\"navtitle\" align=\"center\">$title - MediaWiki Publisher User Manual</td>\n";
 $nav .= "</tr></table></div>\n";

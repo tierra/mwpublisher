@@ -6,8 +6,7 @@
  *  \version Revision version:   $Revision$
  *  \author  Revision committer: $Author$
  *
- *  Copyright (C) 2006 Bryan Petty <bryan@mwpublisher.org> et al
- *  MediaWiki Publisher - http://mwpublisher.org/
+ *  Copyright (C) 2006 Bryan Petty <bryan@ibaku.net>
  *  Copyright (C) 2002-2005 Brion Vibber <brion@pobox.com> et al
  *  MediaWiki - http://www.mediawiki.org/
  *
@@ -368,7 +367,7 @@ class mwpGenericParser extends mwpParser
 		}
 
 		$newsection = '';
-		
+
 		if($level != 0)
 		{
 			$beginning = $i;
@@ -583,7 +582,7 @@ class mwpGenericParser extends mwpParser
 		$secondarytext = '';
 		$copy = $matches[1];
 		$originallink = $copy;
-		
+
 		// Recursively handle subsequent internal links on the same line.
 		// We actually want greedy matches so links within other links
 		// are parsed and handled first.
@@ -594,9 +593,9 @@ class mwpGenericParser extends mwpParser
 			$secondarytext = substr($matches[0], strpos($matches[0], ']]') + 2);
 			$secondarytext = preg_replace_callback("/\[\[(.+)\]\]/", array($this, 'sub_internal_link'), $secondarytext);
 		}
-		
+
 		$label = '';
-		
+
 		// Suck out the label if there is one
 		if(strpos($copy, '|') !== false)
 		{
@@ -856,7 +855,7 @@ class mwpGenericParser extends mwpParser
 			$fc = substr ( $x , 0 , 1 ) ;
 			if ( preg_match( '/^(:*)\{\|(.*)$/', $x, $matches ) ) {
 				$indent_level = strlen( $matches[1] );
-				
+
 				$attributes = $this->mw_unstrip_for_html( $matches[2] );
 					$t[$k] = str_repeat( '<dl><dd>', $indent_level ) .
 					'<table' . Sanitizer::fixTagAttributes ( $attributes, 'table' ) . '>' ;
@@ -989,7 +988,7 @@ class mwpGenericParser extends mwpParser
 		for ( $content = end($state['nowiki']); $content !== false; $content = prev( $state['nowiki'] ) ) {
 			$text = str_replace( key( $state['nowiki'] ), $content, $text );
 		}
-		
+
 		global $wgRawHtml;
 		if ($wgRawHtml) {
 			for ( $content = end($state['html']); $content !== false; $content = prev( $state['html'] ) ) {
@@ -1001,7 +1000,7 @@ class mwpGenericParser extends mwpParser
 	}
 
 	function format_block_levels($text, $linestart)
-	{	
+	{
 		# Parsing through the text line by line.  The main thing
 		# happening here is handling of block-level elements p, pre,
 		# and making lists from lines starting with * # : etc.
@@ -1191,7 +1190,7 @@ class mwpGenericParser extends mwpParser
 			$this->blockDToopen = true;
 		}
 		else { $result = '<!-- ERR 1 -->'; }
-		
+
 		return $result;
 	}
 

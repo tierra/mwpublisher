@@ -74,7 +74,7 @@ easy to write, so don't be discouraged if your desired format is not listed.
 
 ## License
 
-Copyright © 2006 Bryan Petty et al [MediaWiki Publisher](http://mwpublisher.org/)
+Copyright © 2006 Bryan Petty
 
 Portions of mwpGenericParser and the Sanitizer classes are Copyright ©
 2002-2005 Brion Vibber.  Please see individual files for additional copyright

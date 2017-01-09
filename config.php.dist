@@ -6,8 +6,7 @@
  *  \version Revision version:   $Revision$
  *  \author  Revision committer: $Author$
  *
- *  Copyright (C) 2006 Bryan Petty et al
- *  MediaWiki Publisher - http://mwpublisher.org/
+ *  Copyright (C) 2006 Bryan Petty
  *
  *  This file is part of MediaWiki Publisher.
  *
@@ -37,7 +36,7 @@ require_once "general.php";
 //define('ISO_639_3', true);
 
 // URL to your MediaWiki installation. Trailing slash is required.
-$MWURL = "http://mwpublisher.org/";
+$MWURL = "http://example.com/";
 
 // Uncomment the parsers you plan to use:
 require_once "parsers/helpblocks.php";

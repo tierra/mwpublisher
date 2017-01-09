@@ -6,8 +6,7 @@
  *  \version Revision version:   $Revision$
  *  \author  Revision committer: $Author$
  *
- *  Copyright (C) 2006 Bryan Petty <bryan@mwpublisher.org> et al
- *  MediaWiki Publisher - http://mwpublisher.org/
+ *  Copyright (C) 2006 Bryan Petty <bryan@ibaku.net>
  *
  *  This file is part of MediaWiki Publisher.
  *

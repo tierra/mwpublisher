@@ -6,8 +6,7 @@
  *  \version Revision version:   $Revision$
  *  \author  Revision committer: $Author$
  *
- *  Copyright (C) 2006 Bryan Petty <bryan@mwpublisher.org> et al
- *  MediaWiki Publisher - http://mwpublisher.org/
+ *  Copyright (C) 2006 Bryan Petty <bryan@ibaku.net>
  *
  *  This file is part of MediaWiki Publisher.
  *
@@ -92,7 +91,7 @@ class mwpHelpBlocksParser extends mwpGenericParser
 		$gpp_safe = str_replace(',', '\,', $label);
 		$gpp_safe = str_replace('(', '\(', $gpp_safe);
 		$gpp_safe = str_replace(')', '\)', $gpp_safe);
-		
+
 		// Confirm valid link to section specific page
 		if($location->get_section() && isset($this->links[$location->to_string(false)]))
 		{
